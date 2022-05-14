@@ -20,14 +20,19 @@ def send_message(message, recipient):
     client.messages.create(
         body=message,
         from_=number,
-        to=recipient
+        to=recipient,
+        media_url="https://demo.twilio.com/owl.png"
     )
     return message
 
 @app.route('/sms', methods=['POST'])
 def incoming():
     # get_meme("10-Guy", "TOP", "BOTTOM")
-    pass
+    sender_number = request.form["From"]
+    message = request.form["Body"]
+
+    send_message(message, sender_number)
+    return message
 
 if __name__ == "__main__":
     app.run("0.0.0.0", debug=True)
